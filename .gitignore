@@ -1,0 +1,24 @@
+# Dependency directories
+node_modules/
+dist/
+
+# TypeScript configuration
+tsconfig.json
+
+# ESLint configuration
+.eslintrc.json
+
+# Playwright configuration (optional, adjust based on your needs)
+.playwright.*
+
+# Environment variables (if applicable)
+.env
+
+# Logs and debugging files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+debug.log
+/test-results/
+/playwright-report/
+/playwright/.cache/
