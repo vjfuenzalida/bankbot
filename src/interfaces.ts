@@ -7,3 +7,8 @@ export interface BaseDialog {
   start: () => void;
   stop: () => void;
 }
+
+export interface Period {
+  month: number;
+  year: number;
+}

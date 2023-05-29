@@ -3,29 +3,30 @@ import { LoginPage } from "./santander/LoginPage";
 import Config from "./config";
 import { MainPage } from "./santander/MainPage";
 import { TutorialDialog } from "./santander/TutorialDialog";
-import { BaseDialog } from "./interfaces";
+import { BaseDialog, Period } from "./interfaces";
+import { MovementsPage } from "./santander/MovementsPage";
 
-const watchers: BaseDialog[] = [];
+// const watchers: BaseDialog[] = [];
 
-function setupWatchers(page: Page) {
-  const tutorialDialog = new TutorialDialog(page);
-  watchers.push(tutorialDialog);
-}
+// function setupWatchers(page: Page) {
+//   const tutorialDialog = new TutorialDialog(page);
+//   watchers.push(tutorialDialog);
+// }
 
-function startWatchers() {
-  watchers.forEach((watcher) => watcher.start());
-}
+// function startWatchers() {
+//   watchers.forEach((watcher) => watcher.start());
+// }
 
-function stopWatchers() {
-  watchers.forEach((watcher) => watcher.stop());
-}
+// function stopWatchers() {
+//   watchers.forEach((watcher) => watcher.stop());
+// }
 
 async function run() {
   const browser: Browser = await chromium.launch({ headless: false });
   const page: Page = await browser.newPage();
 
-  setupWatchers(page);
-  startWatchers();
+  // setupWatchers(page);
+  // startWatchers();
 
   const loginPage = new LoginPage(page);
   await loginPage.goto();
@@ -34,11 +35,19 @@ async function run() {
   const mainPage = new MainPage(page);
   await mainPage.goto();
 
-  await page.waitForTimeout(50000);
+  const movementsPage = new MovementsPage(page);
+  await movementsPage.goto();
+
+  await movementsPage.clearDialogs();
+
+  const period: Period = { month: 3, year: 2023 }
+  await movementsPage.selectPeriod(period);
+
+  await page.waitForTimeout(10000);
 
   await mainPage.logout();
 
-  stopWatchers();
+  // stopWatchers();
 
   await browser.close();
 }
